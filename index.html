@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>React in HTML</title>
+    <script src="https://unpkg.com/react@latest/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@emotion/react@11.11.4/dist/emotion-react.umd.min.js"></script>
+    <script>
+        window.EmotionReact = emotionReact;
+        window.EmotionCache = () => ({});
+    </script>
+    <!-- <script src="https://unpkg.com/@emotion/cache@latest/dist/emotion-cache.cjs.prod.js"></script> -->
+    <!-- <script type="module" src="https://unpkg.com/@emotion/cache@latest/dist/emotion-cache.browser.esm.js"></script> -->
+
+    <script src="/dist/WidgetUI.js"></script>
+    <style>
+        #button-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 60px;
+          width: 150;
+          border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <div id="button-container">
+
+    </div>
+    <script>
+        const fn = () => ({});
+        const container = document.getElementById('button-container');
+        WidgetUI.mountComponent(container, { 
+            destroy: fn,
+            repaintPorts: fn,
+            globalContext: {
+
+            },
+        });
+    </script>
+</body>
+</html>
