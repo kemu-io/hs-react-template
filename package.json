@@ -14,9 +14,11 @@
     "test": "jest",
     "start-server": "npm run build && npx live-server . --no-browser",
     "dev": "tsc-watch --noClear -p tsconfig.json --onSuccess \"npm run gulp-tasks\"",
-    "build": "rimraf dist/ && webpack --mode production",
+    "build:processor": "tsc -p tsconfig-processor.json && npm run copyFiles",
+    "build": "rimraf dist/ && webpack --mode production && npm run build:processor",
     "prepare": "npm run build",
     "lint": "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs src/**/*.ts",
+    "copyFiles": "copyfiles -f src/manifest.json src/icon.svg dist/",
     "prepublishOnly": "npm run lint",
     "preversion": "npm run lint",
     "version": "git add -A src",
@@ -25,14 +27,12 @@
     "bump-minor": "npm version minor",
     "bump-major": "npm version major"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:kemu-io/hs.git"
-  },
   "author": "Alexander Agudelo",
   "license": "UNLICENSED",
   "dependencies": {
     "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@kemu-io/hs": "github:kemu-io/hs#v0.2.0",
     "@kemu-io/hs-react": "^0.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

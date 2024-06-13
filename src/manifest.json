@@ -1,0 +1,25 @@
+{
+  "name": "test.company.react",
+  "version": "1.0.0",
+  "title": "Kemu Service With UI",
+  "shortTitle": "Test",
+  "description": "Sample project for a Kemu Service processor + UI",
+  "processor": "js",
+  "widgetUI": true,
+  "settingsUI": false,
+  "eventEmitter": false,
+  "ignoreParentEvents": false,
+  "svgIcon": "icon.svg",
+  "inputs": [
+    {
+      "name": "image",
+      "type": "ImageData"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "image",
+      "type": "ImageData"
+    }
+  ]
+}
