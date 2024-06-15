@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { CustomWidgetProps, createWidgetUI, constants, components } from '@kemu-io/hs-react';
+import { CustomWidgetProps, createWidgetUI, components } from '@kemu-io/hs-react';
 import packageJson from '../package.json';
 
 const { WidgetContainer } = components;
