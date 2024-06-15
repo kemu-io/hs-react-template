@@ -32,20 +32,19 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@kemu-io/hs": "github:kemu-io/hs#v0.2.0",
-    "@kemu-io/hs-react": "^0.1.1",
+    "@kemu-io/hs": "https://github.com/kemu-io/hs#latest",
+    "@kemu-io/hs-react": "https://github.com/kemu-io/hs-react#latest",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
-  "peerDependencies": {
-    "@kemu-io/hs-types": "^0.1.10"
-  },
   "devDependencies": {
+    "@babel/core": "^7.24.7",
     "@babel/preset-env": "^7.24.6",
     "@babel/preset-react": "^7.24.6",
     "@babel/preset-typescript": "^7.24.6",
     "@emotion/babel-preset-css-prop": "^11.11.0",
     "@eslint/js": "^9.4.0",
+    "@types/babel__core": "^7",
     "@types/eslint__js": "^8.42.3",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.11",

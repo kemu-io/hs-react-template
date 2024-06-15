@@ -1,31 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { CustomWidgetProps, createWidgetUI } from '@kemu-io/hs-react';
-import styled from '@emotion/styled';
+import { CustomWidgetProps, createWidgetUI, constants, components } from '@kemu-io/hs-react';
 import packageJson from '../package.json';
 
-interface Props extends CustomWidgetProps {
+const { WidgetContainer } = components;
 
-}
-
-const WidgetWrapper = styled.div`
-  width: 62px;
-  height: 54px;
-  background-color: #68bb6c;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  padding: 10px;
-  border-radius: 8px;
-`;
-
-const WidgetUI = (props: Props) => {
-  console.log('Props: ', props);
-
+const WidgetUI = (props: CustomWidgetProps) => {
+  console.log('Rendered: ', props);
   return (
-    <WidgetWrapper>
+    <WidgetContainer {...props}>
       <button>Click Me</button>
-    </WidgetWrapper>
+    </WidgetContainer>
   );
 };
 
