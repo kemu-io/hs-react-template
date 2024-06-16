@@ -12,7 +12,7 @@
   },
   "scripts": {
     "test": "jest",
-    "start-server": "npm run build && npx live-server . --no-browser",
+    "start-server": "npm run build && npx live-server . --no-browser --port=8081",
     "dev": "tsc-watch --noClear -p tsconfig.json",
     "build:processor": "tsc -p tsconfig-processor.json && npm run copyFiles",
     "build": "rimraf dist/ && webpack --mode production && npm run build:processor",
