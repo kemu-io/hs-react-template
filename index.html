@@ -2,43 +2,162 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>React in HTML</title>
+    <title>Kemu Hub Service Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
     <script src="https://unpkg.com/react@latest/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@latest/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@emotion/react@11.11.4/dist/emotion-react.umd.min.js"></script>
     <script>
         window.EmotionReact = emotionReact;
-        window.EmotionCache = () => ({});
+        const createCache = ({ key, container, prepend }) => {
+            const cache = {
+                key,
+                container: container || document.head,
+                inserted: {},
+                registered: {},
+                sheet: {
+                cssRules: [],
+                insertRule: function(rule, index) {
+                    this.cssRules.splice(index, 0, rule);
+                    const styleElement = document.createElement('style');
+                    styleElement.setAttribute('data-emotion', key);
+                    styleElement.appendChild(document.createTextNode(rule));
+                    if (prepend) {
+                    container.insertBefore(styleElement, container.firstChild);
+                    } else {
+                    container.appendChild(styleElement);
+                    }
+                }
+                },
+                insert: function(selector, serialized, sheet, shouldCache) {
+                const rule = `${selector} { ${serialized.styles} }`;
+                if (!this.inserted[serialized.name]) {
+                    sheet.insertRule(rule, sheet.cssRules.length);
+                    this.inserted[serialized.name] = true;
+                }
+                }
+            };
+            return cache;
+        };
+
+        window.EmotionCache = createCache
     </script>
-    <!-- <script src="https://unpkg.com/@emotion/cache@latest/dist/emotion-cache.cjs.prod.js"></script> -->
-    <!-- <script type="module" src="https://unpkg.com/@emotion/cache@latest/dist/emotion-cache.browser.esm.js"></script> -->
 
     <script src="/dist/WidgetUI.js"></script>
     <style>
-        #button-container {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 60px;
-          width: 150;
-          border: 1px solid #000;
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            font-weight: 400;
+            font-family: 'Nunito', 'Segoe UI', arial;
+            color: #6c757d;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito', 'Segoe UI', arial;
+            margin-top: 0;
+        }
+        
+        * {
+            box-sizing: border-box;
+            font-family: "Nunito", 'Segoe UI', arial;
+        }
+
+        .k-hs-wrap {
+            position: absolute;
+        }
+
+        #canvas-container {
+            position: relative;
+            background-color: #fff;
+            transition: background-color 0.3s ease;
+            background-image: linear-gradient(to right, #0000000f 1px, transparent 1px), linear-gradient(to bottom, #0000000f 1px, transparent 1px);
+            background-size: 20px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
         }
     </style>
 </head>
 <body>
-    <div id="button-container">
+    <div id="canvas-container">
 
     </div>
     <script>
         const fn = () => ({});
-        const container = document.getElementById('button-container');
+        const container = document.getElementById('canvas-container');
         WidgetUI.mountComponent(container, { 
             destroy: fn,
             repaintPorts: fn,
             globalContext: {
-
+                wrapperClassName: 'abcdefg',
+                manifest: {
+                    name: 'Kemu Hub Service',
+                    description: 'Kemu Hub Service',
+                    version: '1.0.0',
+                    color: '#000',
+                }
             },
         });
+
+        const makeDraggable = (element) => {
+            let isDragging = false;
+            let offsetX, offsetY;
+
+            element.addEventListener('mousedown', (e) => {
+                if(!e.target.classList.contains('k-hs-wrap')) return;
+                isDragging = true;
+                offsetX = e.clientX - element.getBoundingClientRect().left;
+                offsetY = e.clientY - element.getBoundingClientRect().top;
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', onMouseUp);
+            });
+
+            const onMouseMove = (e) => {
+                if (!isDragging) return;
+                const parentRect = element.parentElement.getBoundingClientRect();
+                const elementRect = element.getBoundingClientRect();
+
+                let newX = e.clientX - offsetX;
+                let newY = e.clientY - offsetY;
+
+                // Ensure the element stays within the parent's boundaries
+                if (newX < 0) newX = 0;
+                if (newY < 0) newY = 0;
+                if (newX + elementRect.width > parentRect.width) {
+                    newX = parentRect.width - elementRect.width;
+                }
+                if (newY + elementRect.height > parentRect.height) {
+                    newY = parentRect.height - elementRect.height;
+                }
+
+                element.style.left = newX + 'px';
+                element.style.top = newY + 'px';
+            }
+
+            const onMouseUp = () => {
+                isDragging = false;
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            }
+        }
+
+        const waitForElement = () => {
+            const draggableElement = document.querySelector('.k-hs-wrap');
+            if (draggableElement) {
+                makeDraggable(draggableElement);
+            } else {
+                setTimeout(waitForElement, 100);
+            }
+        }
+
+        waitForElement();
     </script>
 </body>
 </html>
