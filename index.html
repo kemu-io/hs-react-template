@@ -92,16 +92,21 @@
     <script>
         const fn = () => ({});
         const container = document.getElementById('canvas-container');
+        const d = {width: 300, height: 300};
         WidgetUI.mountComponent(container, { 
             destroy: fn,
             repaintPorts: fn,
             globalContext: {
-                wrapperClassName: 'abcdefg',
+                getWidgetDimensions: () => ({ ...d }),
+                setWidgetDimensions: (dim) => { d.width = dim.width; d.height = dim.height; },
+                setOutputs: (outputs) => {
+                    console.log('Data will be sent to outputs:', outputs);
+                },
                 manifest: {
                     name: 'Kemu Hub Service',
                     description: 'Kemu Hub Service',
                     version: '1.0.0',
-                    color: '#000',
+                    color: '#626060',
                 }
             },
         });
