@@ -102,6 +102,14 @@
                 setOutputs: (outputs) => {
                     console.log('Data will be sent to outputs:', outputs);
                 },
+                useWidgetState: () => {
+                    return {
+                        state: {...dummyState},
+                        setState: (s) => dummyState = s,
+
+                    }
+                },
+                serviceOnline: true,
                 manifest: {
                     name: 'Kemu Hub Service',
                     description: 'Kemu Hub Service',
