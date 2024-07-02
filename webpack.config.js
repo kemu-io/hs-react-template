@@ -1,5 +1,6 @@
 // webpack.config.js
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
   mode: filename.includes('.min.') ? 'production' : 'development',
@@ -49,6 +50,11 @@ module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
     '@emotion/react': 'EmotionReact',
     '@emotion/cache': 'EmotionCache',
   },
+  plugins: [
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1,
+    }),
+  ],
   optimization: {
     minimize: filename.includes('.min.')
   }
