@@ -93,6 +93,7 @@
         const fn = () => ({});
         const container = document.getElementById('canvas-container');
         const d = {width: 300, height: 300};
+        let dummyState = {};
         WidgetUI.mountComponent(container, { 
             destroy: fn,
             repaintPorts: fn,
