@@ -107,7 +107,7 @@
                     return {
                         state: {...dummyState},
                         setState: (s) => dummyState = s,
-
+                        getState: () => dummyState,
                     }
                 },
                 serviceOnline: true,
