@@ -92,40 +92,53 @@
     <script>
         const fn = () => ({});
         const container = document.getElementById('canvas-container');
-        const d = {width: 300, height: 300};
-        let dummyState = {};
-        WidgetUI.mountComponent(container, { 
-            destroy: fn,
-            repaintPorts: fn,
-            globalContext: {
-                getWidgetDimensions: () => ({ ...d }),
-                setWidgetDimensions: (dim) => { d.width = dim.width; d.height = dim.height; },
-                setOutputs: (outputs) => {
-                    console.log('Data will be sent to outputs:', outputs);
-                },
-                useWidgetState: () => {
-                    return {
-                        state: {...dummyState},
-                        setState: (s) => dummyState = s,
-                        getState: () => dummyState,
-                    }
-                },
-                serviceOnline: true,
-                manifest: {
-                    name: 'Kemu Hub Service',
-                    description: 'Kemu Hub Service',
-                    version: '1.0.0',
-                    color: '#626060',
+        // Load manifest from `/dist/manifest.json`
+        const fetchManifest = async (filePath) => {
+            try {
+                const response = await fetch(filePath);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-            },
+                const data = await response.json(); // Assuming the file is JSON
+                return data;
+            } catch (error) {
+                console.error("Could not fetch file:", error);
+            }
+        }
+
+        fetchManifest('/dist/manifest.json').then((manifest) => {
+            const d = { width: 300, height: 300 };
+            let dummyState = {};
+            WidgetUI.mountComponent(container, { 
+                destroy: fn,
+                repaintPorts: fn,
+                globalContext: {
+                    getWidgetDimensions: () => ({ ...d }),
+                    setWidgetDimensions: (dim) => { d.width = dim.width; d.height = dim.height; },
+                    setOutputs: (outputs) => {
+                        console.log('Data will be sent to outputs:', outputs);
+                    },
+                    useWidgetState: () => {
+                        return {
+                            state: {...dummyState},
+                            setState: (s) => dummyState = s,
+                            getState: () => dummyState,
+                        }
+                    },
+                    serviceOnline: true,
+                    manifest,
+                },
+            });
         });
+
+        
 
         const makeDraggable = (element) => {
             let isDragging = false;
             let offsetX, offsetY;
 
             element.addEventListener('mousedown', (e) => {
-                if(!e.target.classList.contains('k-hs-wrap')) return;
+                if(!e.currentTarget?.classList.contains('k-hs-wrap')) return;
                 isDragging = true;
                 offsetX = e.clientX - element.getBoundingClientRect().left;
                 offsetY = e.clientY - element.getBoundingClientRect().top;
