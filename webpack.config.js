@@ -50,6 +50,26 @@ module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
     '@emotion/react': 'EmotionReact',
     '@emotion/cache': 'EmotionCache',
   },
+  ...(!filename.endsWith('.min.js') && {
+    devServer: {
+      static: {
+        directory: path.join(__dirname, '.'),
+      },
+      compress: false,
+      port: 8081,
+      hot: true,
+      watchFiles: ['src/**/*'],
+      devMiddleware: {
+        writeToDisk: true,
+      },
+      client: {
+        overlay: {
+          errors: false,
+          warnings: false,
+        },
+      },
+    },
+  }),
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,

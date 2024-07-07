@@ -13,12 +13,12 @@
   "scripts": {
     "test": "jest",
     "pack": "gulp pack",
-    "start-server": "npm run build && npx live-server . --no-browser --port=8081",
+    "start-server": "webpack serve",
     "dev": "tsc-watch --noClear -p tsconfig.json --onSuccess \"npm run build\"",
     "build:processor": "tsc -p tsconfig-processor.json && npm run copyFiles",
     "build": "rimraf dist/ && webpack --mode production && npm run build:processor",
     "lint": "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs src/**/*.ts",
-    "copyFiles": "copyfiles -f src/manifest.json src/icon.svg src/assets/**/* dist/",
+    "copyFiles": "copyfiles -f src/manifest.json src/icon.svg src/assets/**/* dist/"
   },
   "author": "Alexander Agudelo",
   "license": "UNLICENSED",
@@ -56,13 +56,13 @@
     "gulp-terser": "^2.1.0",
     "jest": "^29.7.0",
     "jest-extended": "^4.0.2",
-    "live-server": "^1.2.2",
     "rimraf": "^5.0.7",
     "ts-jest": "^29.1.2",
     "tsc-watch": "^6.2.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.12.0",
     "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
   }
 }
