@@ -2,6 +2,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const isProd = process.env.NODE_ENV === 'production';
+
 module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
   mode: filename.includes('.min.') ? 'production' : 'development',
   entry: './src/WidgetUI.tsx',
@@ -76,6 +78,6 @@ module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
     }),
   ],
   optimization: {
-    minimize: filename.includes('.min.')
+    minimize: isProd ?  true : filename.includes('.min.')
   }
 }));

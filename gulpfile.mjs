@@ -26,7 +26,7 @@ const isPnpm = false;
 
 // Task to run 'npm run pack'
 gulp.task('build', (cb) => {
-  exec('npm run build', (err, stdout, stderr) => {
+  exec('NODE_ENV=production npm run build', (err, stdout, stderr) => {
     console.log(stdout);
     console.error(stderr);
     cb(err);
