@@ -140,6 +140,7 @@
 				globalContext: {
 					getWidgetDimensions: () => ({ ...d }),
 					setWidgetDimensions: (dim) => { d.width = dim.width; d.height = dim.height; },
+					callProcessorHandler: () => { console.log("Not implemented") },
 					setOutputs: (outputs) => {
 						console.log('Data will be sent to outputs:', outputs);
 					},
