@@ -31,7 +31,15 @@ module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
             loader: 'babel-loader',
             options: {
               presets: [
-                '@babel/preset-env',
+                [
+                  '@babel/preset-env',
+                  {
+                    targets: {
+                      esmodules: true, // Ensure modern browsers that support ES modules
+                    },
+                    useBuiltIns: false, // Do not include polyfills
+                  },
+                ],
                 '@babel/preset-react',
                 '@emotion/babel-preset-css-prop',
                 '@babel/preset-typescript', // add this preset
