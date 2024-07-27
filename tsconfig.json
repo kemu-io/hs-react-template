@@ -4,8 +4,8 @@
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
     "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "sourceMap": false,
     "removeComments": false,
     "outDir": "./dist/",
