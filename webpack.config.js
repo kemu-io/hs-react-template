@@ -34,9 +34,7 @@ module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
                 [
                   '@babel/preset-env',
                   {
-                    targets: {
-                      esmodules: true, // Ensure modern browsers that support ES modules
-                    },
+                    targets: 'node 22',
                     useBuiltIns: false, // Do not include polyfills
                   },
                 ],
