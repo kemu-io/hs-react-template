@@ -14,11 +14,12 @@
   "scripts": {
     "test": "jest",
     "pack": "gulp pack",
-    "start-server": "webpack serve",
+    "start-server": "npm run copyFiles && npm run copyFolders && webpack serve",
     "dev": "tsc-watch --noClear -p tsconfig.json --onSuccess \"npm run build\"",
-    "build:processor": "tsc -p tsconfig-processor.json && npm run copyFiles",
+    "build:processor": "tsc -p tsconfig-processor.json && npm run copyFiles && npm run copyFolders",
     "build": "rimraf dist/ && webpack --mode production && npm run build:processor",
     "lint": "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs src/**/*.ts",
+    "copyFolders": "copyfiles -u 1 src/assets/**/* src/customWidgets/*.json dist/",
     "copyFiles": "copyfiles -f src/manifest.json src/icon.svg src/assets/**/* dist/"
   },
   "author": "Alexander Agudelo",
