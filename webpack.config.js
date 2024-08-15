@@ -1,10 +1,16 @@
 // webpack.config.js
-const path = require('path');
-const webpack = require('webpack');
+// const path = require('path');
+// const webpack = require('webpack');
+import path from 'node:path';
+import webpack from 'webpack';
+import { fileURLToPath } from 'node:url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const isProd = process.env.NODE_ENV === 'production';
 
-module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
+// module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
+const config = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
   mode: filename.includes('.min.') ? 'production' : 'development',
   entry: './src/WidgetUI.tsx',
   output: {
@@ -14,6 +20,7 @@ module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
     libraryTarget: 'umd',
     libraryExport: 'default',
     globalObject: 'this',
+    // publicPath: '/',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -31,13 +38,7 @@ module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
             loader: 'babel-loader',
             options: {
               presets: [
-                [
-                  '@babel/preset-env',
-                  {
-                    targets: 'node 22',
-                    useBuiltIns: false, // Do not include polyfills
-                  },
-                ],
+                '@babel/preset-env',
                 '@babel/preset-react',
                 '@emotion/babel-preset-css-prop',
                 '@babel/preset-typescript', // add this preset
@@ -72,7 +73,7 @@ module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
       },
       client: {
         overlay: {
-          errors: false,
+          errors: true,
           warnings: false,
         },
       },
@@ -87,3 +88,6 @@ module.exports = ['widgetUI.js', 'widgetUI.min.js'].map(filename => ({
     minimize: isProd ?  true : filename.includes('.min.')
   }
 }));
+
+
+export default config;
