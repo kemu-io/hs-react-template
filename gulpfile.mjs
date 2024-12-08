@@ -105,7 +105,7 @@ gulp.task('patch-manifest', async () => {
 });
 
 // Define the default task
-const pack = gulp.series(
+const release = gulp.series(
   'clean',
   'build',
   'copy-dist',
@@ -116,4 +116,4 @@ const pack = gulp.series(
   'remove-artifacts'
 );
 
-export { pack };
+export { release };

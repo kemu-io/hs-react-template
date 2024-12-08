@@ -10,6 +10,7 @@
   "eventEmitter": false,
   "ignoreParentEvents": false,
   "svgIcon": "icon.svg",
+  "color": "#4e3eff",
   "inputs": [
     {
       "name": "image",
