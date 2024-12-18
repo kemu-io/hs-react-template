@@ -25,6 +25,26 @@ const version = manifest.version;
 // const isPnpm = existsSync('pnpm-workspace.yaml');
 const isPnpm = false;
 
+/**
+ * Get the current platform and architecture
+ * @returns {string} The current platform and architecture, e.g. 'osx-arm64'
+ */
+const getCurrentPlatform = () => {
+  const os = process.platform === 'win32' ? 'win' : process.platform === 'darwin' ? 'osx' : '';
+  // Get current architecture
+  const arch = (() => {
+    switch (process.arch) {
+      case 'x64': return 'x64';
+      case 'ia32': return 'x86';
+      case 'arm': return 'arm';
+      case 'arm64': return 'arm64';
+      default: return '';
+    }
+  })();
+
+  return `${os}-${arch}`;
+};
+
 // Task to run 'npm run pack'
 gulp.task('build', (cb) => {
   exec('NODE_ENV=production npm run build', (err, stdout, stderr) => {
@@ -82,7 +102,7 @@ gulp.task('npm-install-prod', (cb) => {
 // Task to zip the build directory
 gulp.task('zip-build', () => {
   return gulp.src(['build/**/**/*'], { dot: true, resolveSymlinks: true })
-    .pipe(zip(`${serviceName}@${version}.zip`))
+    .pipe(zip(`${serviceName}@${version}-${getCurrentPlatform()}.zip`))
     .pipe(gulp.dest(`${outputDir}/`));
 });
 
