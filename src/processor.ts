@@ -1,5 +1,5 @@
 import createService, { DataType } from '@kemu-io/hs';
-import { CustomServiceState } from './types/service_t.js';
+import { CustomServiceState } from './types/index.js';
 
 const service = new createService<CustomServiceState>();
 await service.start();
