@@ -4,7 +4,7 @@ import gulp from 'gulp';
 import { exec } from 'child_process';
 import zip from 'gulp-zip';
 import { deleteAsync } from 'del';
-import { readFileSync } from 'fs';
+import { readFileSync, rmSync } from 'fs';
 import { writeFile } from 'fs/promises';
 
 // Read a JSON file
@@ -19,7 +19,7 @@ const manifest = readJsonFile('./src/manifest.json');
 const packageJson = readJsonFile('./package.json');
 
 // Define the service name and version for the zip file name
-const serviceName = manifest.name;
+const serviceName = manifest.name.replace('test.', '');
 const version = manifest.version;
 // Check if pnpm is used by checking the existence of pnpm-workspace.yml
 // const isPnpm = existsSync('pnpm-workspace.yaml');
@@ -47,7 +47,7 @@ const getCurrentPlatform = () => {
 
 // Task to run 'npm run pack'
 gulp.task('build', (cb) => {
-  exec('NODE_ENV=production npm run build', (err, stdout, stderr) => {
+  exec('npm run build', (err, stdout, stderr) => {
     console.log(stdout);
     console.error(stderr);
     cb(err);
@@ -79,22 +79,12 @@ gulp.task('clean', () => {
 
 // Task to install production dependencies in the build directory
 gulp.task('npm-install-prod', (cb) => {
-  // NPM's
-  if(!isPnpm ) {
-    exec('npm install --omit=dev --prefix ./build', (err, stdout, stderr) => {
-      console.log(stdout);
-      console.error(stderr);
-      cb(err);
-    });
-
-    return;
-  }
-
-  // PNPM's
-  const packageName = packageJson.name;
-  exec(`pnpm --filter='${packageName}' --prod deploy ./build`, (err, stdout, stderr) => {
+  exec('npm install --omit=dev --no-save --prefix ./build', (err, stdout, stderr) => {
     console.log(stdout);
-    console.error(stderr);
+    // Windows, npm install creates a symlink to the parent folder in build/node_modules.
+    // Here we get rid of it.
+    rmSync(`./build/node_modules/${packageJson.name}`, { recursive: true, force: true });
+    stderr && console.error(stderr);
     cb(err);
   });
 });
