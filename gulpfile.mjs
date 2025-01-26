@@ -70,6 +70,12 @@ gulp.task('copy-dist', async () => {
   }
 });
 
+// copy the docs folder
+gulp.task('copy-docs', async () => {
+  return gulp.src('docs/**/*', { allowEmpty: true })
+    .pipe(gulp.dest(`${outputDir}/docs/`));
+});
+
 // Remove build directory
 gulp.task('clean', () => {
   return deleteAsync([
@@ -119,6 +125,7 @@ const release = gulp.series(
   'clean',
   'build',
   'copy-dist',
+  'copy-docs',
   'patch-manifest',
   'copy-package-json',
   'npm-install-prod',
