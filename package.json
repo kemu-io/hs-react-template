@@ -20,14 +20,14 @@
     "build": "rimraf dist/ && webpack --mode production && npm run build:processor",
     "lint": "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs src/**/*.ts",
     "copyFolders": "copyfiles -u 1 src/assets/**/* src/customWidgets/*.json dist/",
-    "copyFiles": "copyfiles -f src/manifest.json src/icon.svg src/assets/**/* dist/"
+    "copyFiles": "copyfiles -f src/manifest.json src/*.svg src/assets/**/* dist/"
   },
   "author": "Alexander Agudelo",
   "license": "UNLICENSED",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@kemu-io/hs": "^0.4.44",
+    "@kemu-io/hs": "^0.4.48",
     "@kemu-io/hs-react": "^0.2.37",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
@@ -42,7 +42,7 @@
     "@types/babel__core": "^7",
     "@types/eslint__js": "^8.42.3",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.11",
+    "@types/node": "^20.17.16",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "babel-loader": "^9.1.3",

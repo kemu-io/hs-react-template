@@ -17,7 +17,7 @@
     "strict": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["@emotion/react/types/css-prop"],
+    "types": ["@emotion/react/types/css-prop", "node"],
     "forceConsistentCasingInFileNames": true,
     "preserveConstEnums": true
   }
