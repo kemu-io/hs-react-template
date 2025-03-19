@@ -15,6 +15,7 @@
     "emitDeclarationOnly": false,
     "jsx": "react-jsx",
     "strict": false,
+    "strictNullChecks": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "types": ["@emotion/react/types/css-prop", "node"],
